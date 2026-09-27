@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this method, please cite the paper in preferred-citation."
+title: "vision-TRN"
+type: software
+repository-code: "https://github.com/rhymesg/vision-TRN"
+authors:
+  - family-names: Kim
+    given-names: Youngjoo
+keywords:
+  - terrain-referenced navigation
+  - two-view triangulation
+  - digital elevation model
+  - MATLAB
+preferred-citation:
+  type: article
+  title: "Vision-based navigation for unmanned aircraft using ground feature points and terrain elevation data"
+  authors:
+    - family-names: Kim
+      given-names: Youngjoo
+    - family-names: Bang
+      given-names: Hyochoong
+  journal: "Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering"
+  year: 2018
+  volume: "232"
+  issue: "7"
+  start: "1334"
+  end: "1346"
+  doi: "10.1177/0954410017690548"

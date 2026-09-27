@@ -1,0 +1,6 @@
+/ref/
+.DS_Store
+*.asv
+hs_err_pid*.log
+/result.mat
+/SRTM_N35_to_39_E127_to_129.mat
