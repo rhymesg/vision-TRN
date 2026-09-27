@@ -41,7 +41,7 @@ Expected completion: `Synthetic geometry checks passed.` It checks analytic imag
 
 ## Implementation scope
 
-The supplied helpers cover camera geometry and terrain interpolation. `main_visionTRN.m` runs scalar position, roll, and velocity experiments with truth-based measurements; it is not the paper's complete navigation filter. See [implementation notes](docs/implementation-notes.md) for geometry and experiment constraints; native MATLAB execution remains unverified.
+The supplied helpers cover camera geometry and terrain interpolation. `main_visionTRN.m` runs scalar position, roll, and velocity experiments with truth-based measurements; it is not the paper's complete navigation filter. See [implementation notes](docs/implementation-notes.md) for geometry and experiment constraints.
 
 ### Checks
 

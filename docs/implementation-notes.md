@@ -25,4 +25,4 @@ These notes describe limitations visible in the supplied source. The [method gui
 
 [example_synthetic.m](../example_synthetic.m) checks the root projection and homogeneous triangulation using exact rays, a rotation inverse, a nonsymmetric terrain interpolation fixture, and the terrain sentinel. It does not exercise Hartley-Sturm correction, eight-point translation, stochastic filtering, or a publication experiment.
 
-Expected values come from analytic geometry; the tolerances are smoke-check thresholds for these small double-precision fixtures, not scientific error bounds. MATLAB and Octave were unavailable during preparation, so runtime compatibility remains unverified.
+Expected values come from analytic geometry; the tolerances are smoke-check thresholds for these small double-precision fixtures, not scientific error bounds.

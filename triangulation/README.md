@@ -13,4 +13,4 @@ From a fresh MATLAB session started at the repository root, run the standalone p
 matlab -batch "cd('triangulation'); addpath('allfns/vgg_numerics'); test_triangulation"
 ```
 
-It prints `x_est` and `feature_true` for comparison without assertions; runtime behavior remains unverified. Do not add this folder recursively to the path used by root scripts; preserve [bundled notices](../docs/provenance.md#third-party-code).
+It prints `x_est` and `feature_true` for comparison without assertions. Do not add this folder recursively to the path used by root scripts; preserve [bundled notices](../docs/provenance.md#third-party-code).
