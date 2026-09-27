@@ -30,5 +30,11 @@ assert(abs(getFeatureHeight_dted(12.5, 17.5, terrain, 10) - 38.75) < 1e-12);
 assert(getFeatureHeight_dted(10, 10, terrain, 10) == 10);
 assert(getFeatureHeight_dted(20, 15, terrain, 10) == 0);
 assert(getFeatureHeight_dted(5, 15, terrain, 10) == 0);
+no_overlap = getMatchedPoints([0;0;10], [1000;0;10], zeros(3,1), ...
+    zeros(3,1), [1;1;0], camera);
+assert(isempty(no_overlap));
+two_features = getMatchedPoints([0;0;10], [0;0;10], zeros(3,1), ...
+    zeros(3,1), [1,2;1,2;0,0], camera);
+assert(isequal(two_features, [1,2]));
 fprintf('Synthetic geometry checks passed.\n');
 end

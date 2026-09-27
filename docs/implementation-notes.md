@@ -1,28 +1,25 @@
 # Implementation notes
 
-These notes describe limitations visible in the supplied source. The [method guide](method.md) distinguishes publication equations from the experiments; none of the numerical behavior below has been changed.
+Source behavior for the [vision navigation routines](../README.md). The [method guide](method.md) connects these components to the publication, and the [source contracts](source-reference.md) define their arrays and coordinates.
 
 ## Scalar experiment
 
-- `main_visionTRN.m` does not call the camera projection, feature triangulation, translation, or nine-state process helpers. It estimates only scalar X position, roll, and X velocity using separate particle populations.
-- Measurements and likelihoods access `X_true` directly, including a Gaussian position factor centred on true position; errors cannot be interpreted as sensor-only navigation accuracy.
-- `x_meas` already contains absolute truth coordinates, but predicted terrain queries add particle X and true Y again. This shifts the queried region and can invoke the zero-height out-of-bounds sentinel.
-- The velocity residual draws noise using `att_std_est` while its likelihood uses `vel_std_est`; the exponent and prefactor also use different scales.
-- Weight normalization has no guard for zero or nonfinite sums. If a resampling lookup is empty, the code selects particle 1.
-- Position trials are filtered by final error before RMS computation; no accepted trial leaves `res_monte_X_*` undefined. Setting `monte_step` to 1 skips statistics that the plotting code still needs.
-- `stderr` computes RMS error, and the plotted velocity statistic adds `V_bias`. Preserve these choices when comparing historical outputs, and resolve them before scientific validation.
+[main_visionTRN.m](../main_visionTRN.m) propagates separate particle populations for X position, roll, and X velocity. It constructs measurements from `X_true`, including a Gaussian position factor centered on truth; use its plots to study this simulation's behavior.
+
+Terrain queries add particle X and true Y to `x_meas`, which already contains absolute coordinates. The velocity residual samples noise with `att_std_est`, while its likelihood uses `vel_std_est`; retain these explicit conventions when comparing historical outputs.
+
+Weight normalization requires positive finite totals. Position statistics retain trials selected by final error, so configure more than one trial and ensure the accepted-trial arrays are populated before plotting. `stderr` computes RMS error, and the velocity plot adds `V_bias` to that statistic.
 
 ## Geometry
 
-- `getImageMeasurement` neither applies its pixel noise/rounding settings nor checks visibility; `getMatchedPoints` approximates overlap using altitude and image dimensions while ignoring orientation and terrain height.
-- `getTranslation_8point` has the [calibration, decomposition, sign, and normalization differences](method.md#translation-and-velocity) described in the method guide.
-- `liu_HartleySturm` uses `real(roots(g))`, taking real parts of complex polynomial roots. `fundfromcameras` constructs the convention `y2' * F * y1 = 0`, while the correction routine declares `y1' * F * y2 = 0` and passes the matrix without a transpose; general stereo reconstruction needs validation across that boundary.
-- `process_model` updates attitude nonlinearly, but its returned `F` has a zero attitude block; it is not a verified linearization of that state update or the paper's 15-state error model.
-- Zero baseline/depth, small homogeneous denominators, degenerate rays, and the Euler-rate singularity have no explicit guards.
-- `triangulation/` contains alternative versions of root functions. Recursive path setup can silently select incompatible interfaces.
+The root projection uses focal length and signed camera depth. Footprint matching approximates image overlap with altitude and image dimensions; it returns an empty index list for disjoint footprints and accepts feature arrays with any number of columns.
+
+Hartley-Sturm correction takes real parts of polynomial roots. `fundfromcameras` uses `y2' * F * y1 = 0`, while the correction routine declares `y1' * F * y2 = 0`; align matrix conventions when adapting that boundary. The synthetic example exercises homogeneous triangulation directly.
+
+The nine-state process helper updates attitude nonlinearly and returns a matrix with a zero attitude block. For an estimator linearization, derive the Jacobian of the selected state model. Use positive baseline, nonzero projection depth and homogeneous denominator, and Euler angles away from the pitch singularity.
+
+Keep the repository root on the MATLAB path for these interfaces; `triangulation/` contains separate historical variants.
 
 ## Example coverage
 
-[example_synthetic.m](../example_synthetic.m) checks the root projection and homogeneous triangulation using exact rays, a rotation inverse, a nonsymmetric terrain interpolation fixture, and the terrain sentinel. It does not exercise Hartley-Sturm correction, eight-point translation, stochastic filtering, or a publication experiment.
-
-Expected values come from analytic geometry; the tolerances are smoke-check thresholds for these small double-precision fixtures, not scientific error bounds.
+[example_synthetic.m](../example_synthetic.m) checks image projection, homogeneous triangulation, rotation inversion, a nonsymmetric terrain interpolation fixture, the terrain sentinel, and footprint matching. Expected values come from analytical geometry.

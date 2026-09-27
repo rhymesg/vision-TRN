@@ -18,7 +18,7 @@ The eight-point helper reads column 9 of `V` from `svd(X',0)`. For an 8-by-9 mat
 
 Match right singular vectors rather than assuming an API returns `V` rather than its transpose. Compare dehomogenized points, residuals, or vector directions instead of raw SVD signs; preserve the source's translation sign selection only when explicitly testing source equivalence.
 
-A redesign that calibrates pixels, enforces essential-matrix singular values, resolves cheirality, guards likelihood underflow, or changes the terrain sentinel must be validated separately from a translation. The [known limitations](implementation-notes.md) identify the decisions requiring scientific review.
+A redesign that calibrates pixels, enforces essential-matrix singular values, resolves cheirality, guards likelihood underflow, or changes the terrain sentinel must be validated separately from a translation. The [source behavior](implementation-notes.md) records the coordinate, likelihood, and linearization conventions to preserve or derive for the target model.
 
 ## Deterministic comparison
 

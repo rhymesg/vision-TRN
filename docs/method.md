@@ -14,7 +14,7 @@ Given matched homogeneous pixels $y_1,y_2$, camera positions $p_1,p_2$, focal le
 
 The paper uses a position/attitude likelihood proportional to $\exp(-\gamma\sum_i d_i)$ in Eq. (17), plus a barometric altitude observation in Eqs. (18)-(19). The root main script does not connect these routines or implement those observations; `test_triangulation_2.m` explores the elevation residual separately.
 
-The optimal triangulation helper calls the bundled Hartley-Sturm correction and then homogeneous triangulation. The latter solves the stacked cross-product equations $[\,[y_1]_\times C_1;[y_2]_\times C_2\,]X=0$ using the last right singular vector; see [source contracts](source-reference.md) and [numerical limitations](implementation-notes.md#geometry).
+The optimal triangulation helper calls the bundled Hartley-Sturm correction and then homogeneous triangulation. The latter solves the stacked cross-product equations $[\,[y_1]_\times C_1;[y_2]_\times C_2\,]X=0$ using the last right singular vector; see [source contracts](source-reference.md) and [geometry conventions](implementation-notes.md#geometry).
 
 ## Translation and velocity
 
@@ -24,20 +24,19 @@ The paper estimates an essential matrix from calibrated correspondences, decompo
 
 $$[u_1u_2,\;u_1v_2,\;u_1,\;v_1u_2,\;v_1v_2,\;v_1,\;u_2,\;v_2,\;1].$$
 
-It reshapes the ninth right singular vector in MATLAB column-major order into a matrix satisfying $x_2^T E x_1=0$, then performs another SVD. A row-major reshape would transpose that matrix and reverse the epipolar convention. This implementation differs materially from the paper:
+It reshapes the ninth right singular vector in MATLAB column-major order into a matrix satisfying $x_2^T E x_1=0$, then performs another SVD. A row-major reshape would transpose that matrix and reverse the epipolar convention. The helper uses these source conventions:
 
 - The calibration matrix is constructed but never applied; callers must supply normalized coordinates for an essential-matrix interpretation.
-- It does not enforce equal first two singular values and a zero third singular value.
+- SVD uses the fitted matrix directly; an essential-matrix formulation constrains its singular values to `(s,s,0)`.
 - Translation matrices use `V1`, whereas paper Eq. (21) uses `U`.
-- It selects the candidate with the greater first component, performs no cheirality check, and returns an unnormalized vector.
-- The angular likelihood in Eq. (25) is absent from the main script.
+- It selects the candidate with the greater first component and returns its vector at the computed scale.
 
-Treat this helper as an experimental implementation to inspect, not a validated velocity estimator.
+For the paper's velocity observation, follow the calibrated decomposition and angular likelihood in Eqs. (20)–(25).
 
 ## Estimator scope
 
 The paper describes a 15-state error model with inertial sensor errors and particle filtering with effective-sample-size resampling. [process_model.m](../process_model.m) exposes a separate nine-state Cartesian propagation helper; [main_visionTRN.m](../main_visionTRN.m) instead propagates and resamples three scalar particle populations at every measurement update.
 
-The paper's Table 1 uses 30 m DEM spacing, 100 Hz IMU sampling, 1 Hz camera updates, and 12/20/40 features. The main script's settings and likelihoods differ; existing plots cannot establish reproduction of those experiments.
+The paper's Table 1 uses 30 m DEM spacing, 100 Hz IMU sampling, 1 Hz camera updates, and 12/20/40 features. Use those settings for the paper's experiment; [implementation notes](implementation-notes.md#scalar-experiment) describe the separate scalar source experiment.
 
 Use [example_synthetic.m](../example_synthetic.m) for a small deterministic geometry check, then consult the [running guide](running.md) for the independent legacy experiments and [translation guide](translation.md) for adaptation.

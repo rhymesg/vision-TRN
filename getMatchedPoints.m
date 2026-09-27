@@ -1,8 +1,7 @@
 function [ indices ] = getMatchedPoints(pos_cam1, pos_cam2, euler1, euler2, features, camera)
 % Youngjoo Kim, 2013.11.29.
 %GETMATCHEDPOINTS 
-%   Search feature points that lie on two images and get their pixel
-%   coordinates.
+%   Return indices of feature points within both camera footprints.
 %
 % INPUT
 % pos_uav_prev, pos_uav_curr: true positions of uav on navigation frame
@@ -10,9 +9,9 @@ function [ indices ] = getMatchedPoints(pos_cam1, pos_cam2, euler1, euler2, feat
 % camera : camera model
 %
 % OUTPUT
-% x1, x2 : pixel coordinates of matched feature points
 % indices : indices of the corresponding feature points in 'features' array
 
+indices = [];
 f = camera(1);
 nx = camera(2);
 ny = camera(3);
@@ -31,8 +30,7 @@ if (xmax <= xmin || ymax <= ymin)
 end
 
 % search points on the shared region
-indices = [];
-for k = 1:1:length(features)
+for k = 1:1:size(features, 2)
     if (features(1,k) < xmax && features(1,k) > xmin && features(2,k) < ymax && features(2,k) > ymin)
         indices = [indices k];
     end

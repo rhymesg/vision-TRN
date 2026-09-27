@@ -32,4 +32,4 @@ For a cell, define `a=(X-i*r)/r` and `b=(Y-j*r)/r`. The returned height is `(1-a
 
 The helpers generally assume correctly sized finite inputs. Zero projection depth, coincident cameras, points at infinity, degenerate correspondences, or Euler pitch near ±pi/2 can produce nonfinite or unstable results without a dedicated diagnostic.
 
-`getMatchedPoints` prints a message and returns early when fewer than five matches are found; its no-overlap branch can return without assigning the output. That threshold does not satisfy the eight-point method's correspondence requirement.
+`getMatchedPoints` returns an empty list for disjoint footprints and the selected indices for overlapping footprints. It prints a diagnostic below five matches; supply at least eight nondegenerate correspondences when calling the separate eight-point translation helper.

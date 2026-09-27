@@ -49,6 +49,8 @@ Use `example_synthetic` to check the geometry helpers against analytic values. T
 
 ## Citation
 
+For academic attribution, please acknowledge this repository when adapting its code or examples.
+
 Please cite the paper when using this method:
 
 > Youngjoo Kim and Hyochoong Bang. “Vision-based navigation for unmanned aircraft using ground feature points and terrain elevation data.” *Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering*, 232(7), 1334-1346, 2018. [doi:10.1177/0954410017690548](https://doi.org/10.1177/0954410017690548).

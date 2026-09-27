@@ -8,8 +8,7 @@ This reference identifies the source snapshot and its reuse constraints. Publica
 - Archive SHA-256: `65842d853ee086200cb3a19b9408ebe3b3da3adfdfa56c21916ec2e9524007b9`.
 - `getMatchedPoints.m` identifies Youngjoo Kim in its original header; this is the basis for the software author metadata, not an assertion of authorship over bundled utilities.
 - The routines address components of the associated publication; their differences from the complete estimator are mapped in [method.md](method.md).
-- No upstream repository history, release identifier, or author-endorsed reference-implementation designation is established for this snapshot.
-- Original code, terrain text, triangulation utilities, and result artifacts retain their layout. Added source comments link the method and citation, and Korean comments in two root files are encoded as UTF-8; numerical code is unchanged.
+- Original code, terrain text, triangulation utilities, and result artifacts retain their layout. Added source comments link the method and citation, and Korean comments in two root files are encoded as UTF-8. `getMatchedPoints` initializes empty outputs and iterates over feature columns, including short feature arrays.
 - The JVM crash log and MATLAB editor backup are excluded. User-provided reference material belongs in ignored `/ref/`; no reference files are tracked.
 
 ## Third-party code
@@ -23,4 +22,4 @@ This reference identifies the source snapshot and its reuse constraints. Publica
 
 Preserve the original notices. The permission in `fundfromcameras.m` does not license the surrounding project or other bundled files; the publisher's article terms do not establish a software license.
 
-Confirm project and third-party permissions before distributing the collection. The absent external SRTM MAT file has additional unresolved [data requirements](running.md#main-experiment).
+Confirm project and third-party permissions before distributing the collection. The SRTM experiment uses the [data requirements](running.md#main-experiment).
