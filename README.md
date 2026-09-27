@@ -8,7 +8,7 @@ Canonical repository: [rhymesg/vision-TRN](https://github.com/rhymesg/vision-TRN
 
 The routines relate to [Kim and Bang's vision-based navigation paper](#citation). Use them to study two-view reconstruction, terrain-height observations, and camera-motion geometry.
 
-Start with the [method and equation map](docs/method.md), [source contracts](docs/source-reference.md), or [Python/C++ adaptation guide](docs/translation.md). This repository provides MATLAB source; no Python or C++ port is included.
+For implementations in Python, C++, or other languages, start with the [method and equation map](docs/method.md), [source contracts](docs/source-reference.md), and [adaptation guide](docs/translation.md).
 
 The associated navigation research has a [granted Korean patent](#related-patent).
 
@@ -24,7 +24,7 @@ Triangulate ground features from two camera views, compare their reconstructed h
 | Pinhole image projection | [getImageMeasurement.m](getImageMeasurement.m) | [Array and coordinate contracts](docs/source-reference.md) |
 | DEM bilinear interpolation | [getFeatureHeight_dted.m](getFeatureHeight_dted.m) | [Paper Eqs. (15)-(16)](docs/method.md#feature-height-observation) |
 | Eight-point translation experiment | [getTranslation_8point.m](getTranslation_8point.m) | [Paper/code differences](docs/method.md#translation-and-velocity) |
-| Scalar particle filtering | [main_visionTRN.m](main_visionTRN.m), [stderr.m](stderr.m) | [Experiment limitations](docs/implementation-notes.md#scalar-experiment) |
+| Scalar particle filtering | [main_visionTRN.m](main_visionTRN.m), [stderr.m](stderr.m) | [Experiment design](docs/implementation-notes.md#scalar-experiment) |
 | Archived triangulation variants and plots | [triangulation/](triangulation/README.md), [result/](result/README.md) | Historical supporting material |
 
 ## Examples
@@ -41,7 +41,7 @@ Expected completion: `Synthetic geometry checks passed.` It checks analytic imag
 
 ## Implementation scope
 
-The supplied helpers cover camera geometry and terrain interpolation. `main_visionTRN.m` runs scalar position, roll, and velocity experiments with truth-based measurements; it is not the paper's complete navigation filter. See [implementation notes](docs/implementation-notes.md) for geometry and experiment constraints.
+The supplied helpers cover camera geometry and terrain interpolation. `main_visionTRN.m` runs scalar position, roll, and velocity experiments using truth-based measurements; the [implementation notes](docs/implementation-notes.md) describe those experiments and their geometry.
 
 ### Checks
 

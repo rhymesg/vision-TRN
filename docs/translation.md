@@ -1,6 +1,6 @@
 # Adapting the MATLAB routines
 
-This guide supports readers implementing related geometry in Python, C++, or another language. Start with the [method](method.md) and [source contracts](source-reference.md); no runnable port is included.
+This guide supports readers implementing related geometry in Python, C++, or another language. Start with the [method](method.md) and [source contracts](source-reference.md) for the equations, array shapes, and coordinate conventions.
 
 ## Preserve the contract
 
