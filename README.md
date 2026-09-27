@@ -10,6 +10,8 @@ The routines relate to [Kim and Bang's vision-based navigation paper](#citation)
 
 Start with the [method and equation map](docs/method.md), [source contracts](docs/source-reference.md), or [Python/C++ adaptation guide](docs/translation.md). This repository provides MATLAB source; no Python or C++ port is included.
 
+The associated navigation research has a [granted Korean patent](#related-patent).
+
 ## Installation
 
 Clone the repository:
@@ -72,6 +74,10 @@ Please cite the paper when using this method:
 > Youngjoo Kim and Hyochoong Bang. “Vision-based navigation for unmanned aircraft using ground feature points and terrain elevation data.” *Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering*, 232(7), 1334-1346, 2018. [doi:10.1177/0954410017690548](https://doi.org/10.1177/0954410017690548).
 
 The [publisher record](https://journals.sagepub.com/doi/10.1177/0954410017690548) dates online publication to 2 February 2017 and the journal issue to June 2018. [CITATION.cff](CITATION.cff) supplies the preferred paper citation; [provenance](docs/provenance.md) identifies this source snapshot and bundled third-party code.
+
+## Related patent
+
+Related granted Korean patent for the navigation research: [KR101737950B1 — Vision-based navigation solution estimation system and method in terrain referenced navigation](https://patents.google.com/patent/KR101737950B1/en). The [method reference](docs/method.md) distinguishes the supplied routines from the complete navigation estimator.
 
 ## License
 
