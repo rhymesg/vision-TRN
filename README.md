@@ -6,57 +6,17 @@ MATLAB research routines for vision-based terrain-referenced navigation (TRN): t
 
 Canonical repository: [rhymesg/vision-TRN](https://github.com/rhymesg/vision-TRN).
 
-The routines relate to [Kim and Bang's vision-based navigation paper](#citation). The camera and terrain helpers expose useful parts of the method, but `main_visionTRN.m` runs separate scalar position, roll, and velocity experiments with truth-based measurements; it does not implement the paper's complete navigation filter.
+The routines relate to [Kim and Bang's vision-based navigation paper](#citation). Use them to study two-view reconstruction, terrain-height observations, and camera-motion geometry.
 
 Start with the [method and equation map](docs/method.md), [source contracts](docs/source-reference.md), or [Python/C++ adaptation guide](docs/translation.md). This repository provides MATLAB source; no Python or C++ port is included.
 
 The associated navigation research has a [granted Korean patent](#related-patent).
 
-## Installation
+## Method
 
-Clone the repository:
+Triangulate ground features from two camera views, compare their reconstructed heights with a DEM, and use the discrepancy as a navigation observation. The helpers expose the projection, reconstruction, and terrain-query steps for adaptation.
 
-```bash
-git clone https://github.com/rhymesg/vision-TRN.git
-```
-
-Enter its root:
-
-```bash
-cd vision-TRN
-```
-
-Use MATLAB with the `matlab` executable on your shell path; the [batch option](https://www.mathworks.com/help/matlab/ref/matlabmacos.html) requires R2019a or later.
-
-The synthetic example uses base MATLAB only. The legacy simulation uses Statistics and Machine Learning Toolbox for [`normrnd`](https://www.mathworks.com/help/stats/normrnd.html), and `test_triangulation_2.m` also uses `fitdist`.
-
-No MATLAB release or operating system has been validated for this snapshot. Keep the root as MATLAB's current folder; do not recursively add `triangulation/`, which contains functions with conflicting names and signatures.
-
-## Usage
-
-Run the deterministic example without terrain files, toolboxes, figures, or file writes:
-
-```bash
-matlab -batch "example_synthetic"
-```
-
-Expected completion: `Synthetic geometry checks passed.` It checks analytic image projection, homogeneous triangulation, rotation inversion, and terrain interpolation, including the out-of-bounds sentinel.
-
-For the scalar particle-filter experiment, first supply the external MAT file described in the [running and data guide](docs/running.md):
-
-```bash
-matlab -batch "rng(0, 'twister'); main_visionTRN"
-```
-
-The script creates plots and overwrites `result.mat`. Its [implementation limitations](docs/implementation-notes.md) affect both interpretation and execution.
-
-## Development
-
-Use the synthetic command after modifying the geometry helpers. Its expected values are analytically derived; the MATLAB example has not been executed in this environment and does not reproduce the paper's results.
-
-When reporting a problem to the maintainer, include the source revision or archive identifier, MATLAB/toolbox versions, command, random seed, input shapes, and error output. Use the [GitHub repository](https://github.com/rhymesg/vision-TRN) for project updates and contributions; [repository metadata](docs/repository-metadata.md) contains a proposed description and topics.
-
-## Algorithms and source
+### Algorithms and source
 
 | Capability | Entry point | Reference |
 |---|---|---|
@@ -66,6 +26,26 @@ When reporting a problem to the maintainer, include the source revision or archi
 | Eight-point translation experiment | [getTranslation_8point.m](getTranslation_8point.m) | [Paper/code differences](docs/method.md#translation-and-velocity) |
 | Scalar particle filtering | [main_visionTRN.m](main_visionTRN.m), [stderr.m](stderr.m) | [Experiment limitations](docs/implementation-notes.md#scalar-experiment) |
 | Archived triangulation variants and plots | [triangulation/](triangulation/README.md), [result/](result/README.md) | Historical supporting material |
+
+## Examples
+
+Run from the repository root with MATLAB on your shell path (`-batch` requires R2019a or later). The synthetic example uses base MATLAB; the scalar simulation also requires Statistics and Machine Learning Toolbox. Keep the root as the current folder: `triangulation/` contains functions with conflicting names and signatures.
+
+Run the deterministic example without terrain files, toolboxes, figures, or file writes:
+
+```bash
+matlab -batch "example_synthetic"
+```
+
+Expected completion: `Synthetic geometry checks passed.` It checks analytic image projection, homogeneous triangulation, rotation inversion, and terrain interpolation, including the out-of-bounds sentinel.
+
+## Implementation scope
+
+The supplied helpers cover camera geometry and terrain interpolation. `main_visionTRN.m` runs scalar position, roll, and velocity experiments with truth-based measurements; it is not the paper's complete navigation filter. See [implementation notes](docs/implementation-notes.md) for geometry and experiment constraints; native MATLAB execution remains unverified.
+
+### Checks
+
+Use `example_synthetic` to check the geometry helpers against analytic values. The [running guide](docs/running.md) documents terrain-data inputs and legacy experiments.
 
 ## Citation
 

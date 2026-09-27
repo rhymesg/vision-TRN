@@ -1,6 +1,6 @@
 # Running and data
 
-This guide describes inputs, commands, and outputs for the supplied MATLAB experiments. Begin with the data-free [synthetic example](../README.md#usage).
+This guide describes inputs, commands, and outputs for the supplied MATLAB experiments. Begin with the data-free [synthetic example](../README.md#examples).
 
 ## Main experiment
 
@@ -8,10 +8,16 @@ This guide describes inputs, commands, and outputs for the supplied MATLAB exper
 - The file is not supplied. Its geographic conversion, datum, provenance, and redistribution terms are not recorded; the code directly treats matrix indices as a local grid using `resolution` in `main_visionTRN.m`.
 - Consult the [terrain contract](source-reference.md#terrain-indexing) when preparing a compatible matrix; the bundled `terrain.txt` is not a substitute for this MAT file.
 - Inspect `TIME`, `dt_ins`, `dt`, `resolution`, `monte_step`, `num_samples`, and the noise settings at the top of [main_visionTRN.m](../main_visionTRN.m).
-- Run the seeded [README command](../README.md#usage) from the root. The script clears workspace variables but does not reset the random generator.
+- The script clears workspace variables but does not reset the random generator.
 - The script saves its workspace to `result.mat`, replacing an existing file, and creates a three-panel error plot.
 - Main outputs include `monte_X_est/err`, `monte_A_est/err`, and `monte_V_est/err`, with trials as rows and times as columns; their units are metres, radians, and metres/second respectively.
 - Position statistics retain only trials satisfying the final-error threshold; attitude and velocity statistics retain all trials. See [interpretation and failure cases](implementation-notes.md#scalar-experiment).
+
+After preparing the terrain file and settings, run from the repository root with Statistics and Machine Learning Toolbox:
+
+```bash
+matlab -batch "rng(0, 'twister'); main_visionTRN"
+```
 
 ## Legacy geometry experiments
 
